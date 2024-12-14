@@ -56,11 +56,25 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w'
 fi
+
+
+# 定义一个函数来追加 Git 分支信息（如果有）
+git_branch_info() {
+    if [[ -n $(git rev-parse --git-dir 2>/dev/null) ]]; then
+        echo -e '\[\e[91m\]$(__git_ps1)\[\e[00m\]'
+    fi
+}
+
+# 追加 Git 分支信息到 PS1
+PS1="$PS1$(git_branch_info)$ "
+
+
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -91,6 +105,8 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias fd='fdfind'
+alias sl=ls
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -133,5 +149,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-alias fd='fdfind'
 
