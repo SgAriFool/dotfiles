@@ -66,13 +66,14 @@ fi
 
 # 定义一个函数来追加 Git 分支信息（如果有）
 git_branch_info() {
-    if [[ -n $(git rev-parse --git-dir 2>/dev/null) ]]; then
-        echo -e '\[\e[91m\]$(__git_ps1)\[\e[00m\]'
-    fi
+    local git_info=$(__git_ps1 " (%s)")
+      if [[ -n $git_info ]]; then
+          echo -e '\033[91m'$git_info'\033[00m'
+      fi
 }
 
 # 追加 Git 分支信息到 PS1
-PS1="$PS1$(git_branch_info)$ "
+PS1="$PS1\$(git_branch_info)\$ "
 
 
 unset color_prompt force_color_prompt
