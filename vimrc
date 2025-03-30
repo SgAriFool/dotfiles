@@ -25,7 +25,7 @@ set scrolloff=5
 " 缩进设置
 set expandtab
 set tabstop=2
-set shiftwidth=2
+set shiftwidth=4
 set softtabstop=2
 
 " 括号自动补全
